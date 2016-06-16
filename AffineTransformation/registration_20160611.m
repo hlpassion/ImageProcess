@@ -6,6 +6,7 @@ moving = rgb2gray(imread('05.tiff'));
 % moving = rgb2gray(imread('fix_test.tiff'));
 imshowpair(fixed, moving,'montage');
 [optimizer, metric] = imregconfig('multimodal');
+
 tform = imregtform(moving, fixed, 'similarity', optimizer, metric);%Translation, %, Scale
 
 Rfixed = imref2d(size(fixed));
