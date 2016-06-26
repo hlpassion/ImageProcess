@@ -9,22 +9,18 @@
 
 %% Step 1: Read Image
 % Bring an image into the workspace.
-original = rgb2gray(imread('fix2.tiff'));
-imshow(original);
-title('original Image');
-%% Step 2: Resize and Rotate the Image
-% scale = 0.7;
-% J = imresize(original, scale); % Try varying the scale factor.
-% 
-% theta = 30;
-% distorted = imrotate(J,theta); % Try varying the angle, theta.
-distorted = rgb2gray(imread('31.tiff'));
+original = rgb2gray(imread('fix3.tiff'));
 
-figure, imshow(distorted)
-
+% imshow(original);
+% title('original Image');
+%% Step 2: Resize and Rotate the Image 
+distorted = rgb2gray(imread('moving3.tiff'));
+scale = 1.2;
+distorted = imresize(distorted, scale);
+figure, imshowpair(original, distorted, 'montage');
+title('unregisted');
 %%
-% You can experiment by varying the scale and rotation of the input image.
-% However, note that there is a limit to the amount you can vary the scale
+% Note that there is a limit to the amount you can vary the scale
 % before the feature detector fails to find enough features.
 
 %% Step 3: Find Matching Features Between Images
@@ -60,7 +56,7 @@ title('Putatively matched points (including outliers)');
 % transformation computation because of the random sampling employed by the
 % MSAC algorithm.
 [tform, inlierDistorted, inlierOriginal] = estimateGeometricTransform(...
-    matchedDistorted, matchedOriginal, 'similarity');
+    matchedDistorted, matchedOriginal, 'affine');
 
 %%
 % Display matching point pairs used in the computation of the
