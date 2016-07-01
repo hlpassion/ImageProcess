@@ -9,14 +9,12 @@
 
 %% Step 1: Read Image
 % Bring an image into the workspace.
-original = rgb2gray(imread('fix3.tiff'));
+original = rgb2gray(imread('tt07_25.tiff'));
 
-% imshow(original);
-% title('original Image');
 %% Step 2: Resize and Rotate the Image 
-distorted = rgb2gray(imread('moving3.tiff'));
-scale = 1.2;
-distorted = imresize(distorted, scale);
+distorted = rgb2gray(imread('tt07_25.png'));
+% scale = 1.2;
+% distorted = imresize(distorted, scale);
 figure, imshowpair(original, distorted, 'montage');
 title('unregisted');
 %%
@@ -25,11 +23,14 @@ title('unregisted');
 
 %% Step 3: Find Matching Features Between Images
 % Detect features in both images.
+%returns a SURFPoints object, points, containing information about SURF features detected in the 2-D grayscale input image I.
+%The detectSURFFeatures function implements the Speeded-Up Robust Features (SURF) algorithm to find blob features.
 ptsOriginal  = detectSURFFeatures(original);
 ptsDistorted = detectSURFFeatures(distorted);
 
 %%
 % Extract feature descriptors.
+%返回64维向量描述子
 [featuresOriginal,  validPtsOriginal]  = extractFeatures(original,  ptsOriginal);
 [featuresDistorted, validPtsDistorted] = extractFeatures(distorted, ptsDistorted);
 
@@ -115,7 +116,7 @@ figure, imshowpair(original,recovered,'montage')
 % the SURF feature detector which finds blobs. Image content and image size
 % also impact the number of detected features.
 
-displayEndOfDemoMessage(mfilename)
+% displayEndOfDemoMessage(mfilename)
 
 
 
